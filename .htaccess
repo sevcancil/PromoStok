@@ -1,0 +1,16 @@
+RewriteEngine On
+
+# 1. Klasör listelemeyi kapat (Güvenlik önlemi)
+Options -Indexes
+
+# 2. HTTPS Zorlama (SSL)
+# Eğer HTTPS açık değilse, trafiği https:// versiyonuna yönlendirir.
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# 3. URL Rewriting (Opsiyonel ama önerilir)
+# Eğer dosya veya klasör fiziksel olarak yoksa index.php'ye yönlendir.
+# (Router yapısı kullanıyorsan bu blok gereklidir)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]

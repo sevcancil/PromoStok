@@ -1,0 +1,257 @@
+:root {
+  --primary: #2563eb;
+  --dark: #1e293b;
+  --light: #f1f5f9;
+  --danger: #ef4444;
+  --success: #22c55e;
+  --warning: #f59e0b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", sans-serif;
+}
+body {
+  background: var(--light);
+  padding-bottom: 80px;
+}
+
+/* Login */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+}
+.login-box {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Header & Search */
+header {
+  background: var(--dark);
+  color: white;
+  padding: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.search-bar input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+/* Tabs */
+.tabs-wrapper {
+  background: white;
+  white-space: nowrap;
+  overflow-x: auto;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  -webkit-overflow-scrolling: touch;
+}
+.tab-link {
+  display: inline-block;
+  padding: 8px 16px;
+  margin-right: 5px;
+  background: #e2e8f0;
+  border-radius: 20px;
+  text-decoration: none;
+  color: var(--dark);
+  font-weight: 500;
+  font-size: 14px;
+}
+.tab-link.active {
+  background: var(--primary);
+  color: white;
+}
+
+/* Product Grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 15px;
+  padding: 15px;
+}
+.product-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.product-img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+.product-info {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+.badge {
+  background: var(--dark);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  display: inline-block;
+}
+.shelf-badge {
+  background: #64748b;
+  margin-left: 5px;
+}
+.qty-display {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--primary);
+  margin: 8px 0;
+}
+
+/* Buttons & Inputs */
+.btn {
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+  display: block;
+  text-decoration: none;
+  text-align: center;
+}
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+.btn-danger {
+  background: var(--danger);
+  color: white;
+}
+.btn-success {
+  background: var(--success);
+  color: white;
+}
+.btn-outline {
+  background: transparent;
+  border: 1px solid #ccc;
+  color: #555;
+  margin-top: 5px;
+  font-size: 13px;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+.form-control {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+/* FAB & Modal */
+.fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--primary);
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4);
+  text-decoration: none;
+  z-index: 99;
+}
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  justify-content: center;
+  align-items: center;
+}
+.modal.show {
+  display: flex;
+}
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* History Table */
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 14px;
+}
+.history-table th,
+.history-table td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+.history-table th {
+  background: #f8fafc;
+  color: #64748b;
+}
+.log-plus {
+  color: var(--success);
+  font-weight: bold;
+}
+.log-minus {
+  color: var(--danger);
+  font-weight: bold;
+}
+.log-date {
+  font-size: 11px;
+  color: #888;
+  display: block;
+  margin-top: 2px;
+}
+.log-note {
+  display: block;
+  font-style: italic;
+  color: #555;
+  font-size: 12px;
+  margin-top: 2px;
+}
