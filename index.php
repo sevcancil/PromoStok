@@ -75,6 +75,10 @@ $warehouses = $pdo->query("SELECT DISTINCT warehouse FROM products ORDER BY ware
             
             <button class="btn btn-primary" onclick="openStockModal(<?= $p['id'] ?>, '<?= htmlspecialchars($p['name']) ?>')">İşlem Yap</button>
             <a href="history.php?id=<?= $p['id'] ?>" class="btn btn-outline">Geçmişi Gör</a>
+            <form action="process.php" method="POST" onsubmit="return confirm('Bu ürünü ve görselini tamamen silmek istediğine emin misin?');" style="margin-top:5px;">
+    <input type="hidden" name="product_id" value="<?= $p['id'] ?>">
+    <button type="submit" name="delete_product" class="btn btn-danger" style="padding: 5px; font-size: 13px;">Sil</button>
+</form>
         </div>
     </div>
     <?php endforeach; ?>
@@ -86,7 +90,24 @@ $warehouses = $pdo->query("SELECT DISTINCT warehouse FROM products ORDER BY ware
     <div class="modal-content">
         <h3>Yeni Ürün Ekle</h3>
         <form action="process.php" method="POST" enctype="multipart/form-data">
-            <div class="form-group"><input type="file" name="image" class="form-control" accept="image/*" capture="camera" required></div>
+            <div class="form-group">
+                    <input type="file" name="image" id="hiddenImageInput" accept="image/*" style="display:none;" onchange="previewFile()">
+
+<div class="form-group">
+    <label style="display:block; margin-bottom:5px; font-weight:500;">Ürün Görseli:</label>
+    <div style="display:flex; gap:10px;">
+        <button type="button" class="btn btn-primary" onclick="openCamera()" style="flex:1;">
+            <i class="fa fa-camera"></i> Fotoğraf Çek
+        </button>
+        <button type="button" class="btn btn-success" onclick="openGallery()" style="flex:1;">
+            <i class="fa fa-images"></i> Galeriden Seç
+        </button>
+    </div>
+    <div id="fileNameShow" style="margin-top:5px; font-size:13px; color:#666; font-style:italic;">
+        Henüz görsel seçilmedi.
+    </div>
+</div>
+            </div>
             <div class="form-group"><input type="text" name="name" class="form-control" placeholder="Ürün Adı" required></div>
             <div class="form-group"><input type="text" name="shelf" class="form-control" placeholder="Raf Kodu (Örn: A-12)"></div>
             <div class="form-group"><input type="number" name="quantity" class="form-control" placeholder="Başlangıç Adedi" required inputmode="numeric"></div>
@@ -138,6 +159,28 @@ function openStockModal(id, name) {
     document.getElementById('stockId').value = id;
     document.getElementById('stockModalTitle').innerText = name;
     document.getElementById('stockModal').classList.add('show');
+}
+function openCamera() {
+    const input = document.getElementById('hiddenImageInput');
+    // Arka kamerayı zorlamak için environment
+    input.setAttribute('capture', 'environment');
+    input.click();
+}
+
+function openGallery() {
+    const input = document.getElementById('hiddenImageInput');
+    // Galeri için capture özelliğini kaldırıyoruz
+    input.removeAttribute('capture');
+    input.click();
+}
+
+function previewFile() {
+    const input = document.getElementById('hiddenImageInput');
+    const display = document.getElementById('fileNameShow');
+    if(input.files && input.files[0]) {
+        display.innerText = "Seçilen: " + input.files[0].name;
+        display.style.color = "green";
+    }
 }
 </script>
 </body>

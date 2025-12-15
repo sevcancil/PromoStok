@@ -69,4 +69,32 @@ if (isset($_POST['product_id']) && isset($_POST['amount']) && isset($_POST['acti
     header("Location: index.php");
     exit;
 }
+// 3. ÜRÜN SİLME
+if (isset($_POST['delete_product'])) {
+    $id = $_POST['product_id'];
+
+    // Önce resim dosyasının adını bulalım ki sunucudan da silebilelim
+    $stmt = $pdo->prepare("SELECT image FROM products WHERE id = ?");
+    $stmt->execute([$id]);
+    $product = $stmt->fetch();
+
+    if ($product) {
+        // Eğer ürünün resmi varsa ve dosya fiziksel olarak oradaysa sil
+        if (!empty($product['image'])) {
+            $filePath = 'uploads/' . $product['image'];
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+        }
+
+        // Veritabanından ürünü sil
+        // Not: Eğer stock_logs tablosunda foreign key constraint varsa önce logları silmen gerekebilir.
+        // Ama basit yapıda direk ürünü silebiliriz.
+        $delStmt = $pdo->prepare("DELETE FROM products WHERE id = ?");
+        $delStmt->execute([$id]);
+    }
+
+    header("Location: index.php");
+    exit;
+}
 ?>
